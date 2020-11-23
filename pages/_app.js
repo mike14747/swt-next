@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import Layout from '../components/layout';
+// import Loading from '../components/loading';
 
 import Header from '../components/header/header';
 import Navbar from '../components/navbar/navbar';
@@ -35,3 +37,12 @@ MyApp.propTypes = {
     Component: PropTypes.func,
     pageProps: PropTypes.any,
 };
+
+/*
+import NProgress from "nprogress";
+import Router from "next/router";
+
+Router.onRouteChangeStart = () => NProgress.start();
+Router.onRouteChangeComplete = () => NProgress.done();
+Router.onRouteChangeError = () => NProgress.done();
+*/

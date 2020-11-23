@@ -10,7 +10,7 @@ const Rules = ({ rules, error }) => {
                     <PageHeading text={rules.content_heading} />
                     {ReactHtmlParser(rules.page_content)}
                 </>
-                : error && <h4 className="text-danger text-center mt-4">An error occurred fetching rules!</h4>
+                : error && <h4 className="text-danger text-center mt-4">An error occurred trying to fetch data!</h4>
             }
         </>
     );
@@ -30,7 +30,7 @@ export async function getServerSideProps({ req, query }) {
         const data = await response.json();
         return { props: data };
     } else {
-        const error = { statusCode: response.status, message: 'An error occurred trying to fetch state info!' };
+        const error = { statusCode: response.status, message: 'An error occurred trying to fetch data!' };
         return { props: { error } };
     }
 }

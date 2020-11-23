@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 
 const PageHeading = ({ text }) => {
     return (
-        <>
+        <div className="mt-3 mb-5">
             <h2 className="text-center">{text}</h2>
             <hr />
-        </>
+        </div>
     );
 };
 
