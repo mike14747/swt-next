@@ -1,0 +1,39 @@
+{
+    "name": "swt-next",
+    "version": "1.0.0",
+    "description": "Skeeball World Tour using next.js as a trial",
+    "main": "index.js",
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mike14747/swt-next.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/mike14747/swt-next/issues"
+    },
+    "homepage": "https://github.com/mike14747/swt-next#readme",
+    "devDependencies": {
+        "eslint": "^7.14.0",
+        "eslint-config-standard": "^16.0.2",
+        "eslint-plugin-import": "^2.22.1",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-promise": "^4.2.1",
+        "eslint-plugin-react": "^7.21.5"
+    },
+    "dependencies": {
+        "next": "^10.0.2",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1",
+        "react-html-parser": "^2.0.2",
+        "serverless-mysql": "^1.5.4",
+        "sql-template-strings": "^2.2.2"
+    }
+}
