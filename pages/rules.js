@@ -21,7 +21,7 @@ Rules.propTypes = {
     error: PropTypes.object,
 };
 
-export async function getServerSideProps({ req, query }) {
+export async function getServerSideProps({ req }) {
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const host = req.headers['x-forwarded-host'] || req.headers.host;
 

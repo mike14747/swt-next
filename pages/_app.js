@@ -1,6 +1,8 @@
+// import App from 'next/app';
 import PropTypes from 'prop-types';
-import Layout from '../components/layout';
-// import Loading from '../components/loading';
+import Loading from '../components/loading';
+import { useState } from 'react';
+import Router from 'next/router';
 
 import Header from '../components/header/header';
 import Navbar from '../components/navbar/navbar';
@@ -10,11 +12,20 @@ import '../styles/my_style.css';
 import '../styles/app_style.css';
 
 export default function MyApp({ Component, pageProps }) {
+    const [loading, setLoading] = useState(false);
+
+    Router.onRouteChangeStart = () => setLoading(true);
+    Router.onRouteChangeComplete = () => setLoading(false);
+    Router.onRouteChangeError = () => setLoading(false);
+
     return (
         <div id="app-wrapper" className="container border bg-white">
             <Header />
             <Navbar />
             <div id="main-container">
+                {loading &&
+                    <Loading />
+                }
                 <Component {...pageProps} />
             </div>
             <Footer />
@@ -37,6 +48,18 @@ MyApp.propTypes = {
     Component: PropTypes.func,
     pageProps: PropTypes.any,
 };
+
+// Only uncomment this method if you have blocking data requirements for
+// every single page in your application. This disables the ability to
+// perform automatic static optimization, causing every page in your app to
+// be server-side rendered.
+//
+// MyApp.getInitialProps = async (appContext) => {
+//   // calls page's `getInitialProps` and fills `appProps.pageProps`
+//   const appProps = await App.getInitialProps(appContext);
+//
+//   return { ...appProps }
+// }
 
 /*
 import NProgress from "nprogress";
