@@ -4,7 +4,6 @@ import SettingsContext from '../../../context/settingsContext';
 import ReactHtmlParser from 'react-html-parser';
 
 const JoinFun = () => {
-    // const { text_box_heading: textBoxHeading = 'join the fun', text_box_text: textBoxText = 'some text... blah, blah, blah' } = useContext(SettingsContext);
     const settings = useContext(SettingsContext);
 
     return (
@@ -23,7 +22,6 @@ const JoinFun = () => {
                     }
                 </>
             }
-
 
             <style jsx>{`
                 .join-heading {

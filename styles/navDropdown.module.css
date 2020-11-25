@@ -43,7 +43,7 @@
     text-decoration: none;
 }
 
-.navdropdown:hover .navdropdown-content {
+.navdropdown:hover .navdropdownContent {
     display: block;
 }
 

@@ -2,6 +2,16 @@ body {
     background-color: #a7a09a !important;
 }
 
+#app-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#main-container {
+    flex: 1;
+}
+
 .empty-result {
     text-align: center;
     color: #dc3545;
