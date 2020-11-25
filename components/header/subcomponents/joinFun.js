@@ -1,20 +1,30 @@
-// import ReactHtmlParser from 'react-html-parser';
+import { useContext } from 'react';
+import SettingsContext from '../../../context/settingsContext';
+
+import ReactHtmlParser from 'react-html-parser';
 
 const JoinFun = () => {
+    // const { text_box_heading: textBoxHeading = 'join the fun', text_box_text: textBoxText = 'some text... blah, blah, blah' } = useContext(SettingsContext);
+    const settings = useContext(SettingsContext);
+
     return (
         <div className="join-dropdown" data-toggle="dropdown">
-            <div className="join-heading">
-                Join the Fun!
-                {/* {textBoxHeading &&
-                    <>{textBoxHeading} +</>
-                } */}
-            </div>
-            <div className="join-dropdown-content">
-                Text from the database will go here.
-                {/* {textBoxText &&
-                    <>{ReactHtmlParser(textBoxText)}</>
-                } */}
-            </div>
+            {settings &&
+                <>
+                    {settings.text_box_heading &&
+                        <div className="join-heading">
+                            {settings.text_box_heading} +
+                        </div>
+                    }
+                    {settings.text_box_text &&
+                        <div className="join-dropdown-content">
+                            {ReactHtmlParser(settings.text_box_text)}
+                        </div>
+                    }
+                </>
+            }
+
+
             <style jsx>{`
                 .join-heading {
                     padding: 10px 5px;

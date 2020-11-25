@@ -1,10 +1,14 @@
 import ReactHtmlParser from 'react-html-parser';
 import PageHeading from '../components/pageHeading';
 import PropTypes from 'prop-types';
+import Head from 'next/head';
 
 const Rules = ({ rules, error }) => {
     return (
         <>
+            <Head>
+                <title>League Rules</title>
+            </Head>
             {rules
                 ? <>
                     <PageHeading text={rules.content_heading} />

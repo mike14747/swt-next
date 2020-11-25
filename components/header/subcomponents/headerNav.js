@@ -19,6 +19,9 @@ const HeaderNav = () => {
                 <Link href="/all-time">
                     <a><li className="nav-item">All-Time Records</li></a>
                 </Link>
+                <Link href="/test">
+                    <a><li className="nav-item">Test</li></a>
+                </Link>
             </ul>
             <style jsx>{`
                 .h-nav-container {

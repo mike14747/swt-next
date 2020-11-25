@@ -1,5 +1,17 @@
-export default function Home() {
+// import Link from 'next/link';
+
+const Home = () => {
     return (
-        <h2>This is the default homepage</h2>
+        <>
+            <h2>This is the home page!</h2>
+        </>
     );
 };
+
+export async function getStaticProps(context) {
+    return {
+        props: {},
+    };
+}
+
+export default Home;

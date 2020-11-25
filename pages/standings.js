@@ -1,5 +1,6 @@
 import PageHeading from '../components/pageHeading';
 import PropTypes from 'prop-types';
+import Head from 'next/head';
 
 import StandingsTables from '../components/standingsTables/standingsTables';
 
@@ -124,6 +125,9 @@ const Standings = ({ standings, error }) => {
 
     return (
         <>
+            <Head>
+                <title>Standings</title>
+            </Head>
             <PageHeading text="Standings" />
             {standings && standings.length > 0
                 ? <StandingsTables standingsArr={standings} />

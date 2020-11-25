@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Loading from '../components/loading';
 import { useState } from 'react';
 import Router from 'next/router';
+import SettingsContext from '../context/settingsContext';
 
 import Header from '../components/header/header';
 import Navbar from '../components/navbar/navbar';
@@ -11,7 +12,9 @@ import Footer from '../components/footer';
 import '../styles/my_style.css';
 import '../styles/app_style.css';
 
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({ settings, Component, pageProps, error }) {
+    // console.log('settings in _app.js:', settings);
+
     const [loading, setLoading] = useState(false);
 
     Router.onRouteChangeStart = () => setLoading(true);
@@ -20,15 +23,18 @@ export default function MyApp({ Component, pageProps }) {
 
     return (
         <div id="app-wrapper" className="container border bg-white">
-            <Header />
-            <Navbar />
-            <div id="main-container">
-                {loading &&
-                    <Loading />
-                }
-                <Component {...pageProps} />
-            </div>
-            <Footer />
+            <SettingsContext.Provider value={settings}>
+                <Header />
+                <Navbar />
+                <div id="main-container">
+                    {loading &&
+                        <Loading />
+                    }
+                    <Component {...pageProps} />
+                </div>
+                <Footer />
+            </SettingsContext.Provider>
+
             <style jsx>{`
                 #app-wrapper {
                     display: flex;
@@ -45,8 +51,24 @@ export default function MyApp({ Component, pageProps }) {
 }
 
 MyApp.propTypes = {
+    settings: PropTypes.object,
     Component: PropTypes.func,
     pageProps: PropTypes.any,
+    error: PropTypes.object,
+};
+
+MyApp.getInitialProps = async ({ ctx: { req } }) => {
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const host = req.headers['x-forwarded-host'] || req.headers.host;
+
+    const settingsResponse = await fetch(`${protocol}://${host}/api/settings`);
+    if (settingsResponse.ok) {
+        const data = await settingsResponse.json();
+        return { settings: data };
+    } else {
+        const error = { statusCode: settingsResponse.status, message: 'An error occurred trying to fetch data!' };
+        return { error: { error } };
+    }
 };
 
 // Only uncomment this method if you have blocking data requirements for
