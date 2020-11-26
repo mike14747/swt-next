@@ -1,23 +1,24 @@
 import { useContext } from 'react';
-import SettingsContext from '../../../context/settingsContext';
 
 import ReactHtmlParser from 'react-html-parser';
 
+import HeaderContext from '../../../context/headerContext';
+
 const JoinFun = () => {
-    const settings = useContext(SettingsContext);
+    const headerData = useContext(HeaderContext);
 
     return (
         <div className="join-dropdown" data-toggle="dropdown">
-            {settings &&
+            {headerData &&
                 <>
-                    {settings.text_box_heading &&
+                    {headerData.textBoxHeading &&
                         <div className="join-heading">
-                            {settings.text_box_heading} +
+                            {headerData.textBoxHeading} +
                         </div>
                     }
-                    {settings.text_box_text &&
+                    {headerData.textBoxText &&
                         <div className="join-dropdown-content">
-                            {ReactHtmlParser(settings.text_box_text)}
+                            {ReactHtmlParser(headerData.textBoxText)}
                         </div>
                     }
                 </>

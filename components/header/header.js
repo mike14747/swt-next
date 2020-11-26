@@ -1,5 +1,7 @@
+import { useContext } from 'react';
 import Link from 'next/link';
 
+import HeaderContext from '../../context/headerContext';
 import SearchBar from './subcomponents/searchBar';
 import HeaderNav from './subcomponents/headerNav';
 import JoinFun from './subcomponents/joinFun';

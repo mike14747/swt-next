@@ -1,7 +1,9 @@
-import PageHeading from '../components/pageHeading';
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
+import CurrentSeasonContext from '../context/currentSeasonContext';
+import PageHeading from '../components/pageHeading';
 import StandingsTables from '../components/standingsTables/standingsTables';
 
 const Standings = ({ standings, error }) => {
@@ -122,6 +124,8 @@ const Standings = ({ standings, error }) => {
     // );
 
     // console.log('standings', standings);
+
+    // const { currentSeasonId } = useContext(CurrentSeasonContext);
 
     return (
         <>

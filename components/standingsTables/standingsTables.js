@@ -4,9 +4,9 @@ import StandingsRow from './subcomponents/standingsRow/standingsRow';
 const StandingsTables = ({ standingsArr }) => {
     return (
         <>
-            {standingsArr.map(standings => (
-                <div key={standings.storeDivision}>
-                    <h5 className="text-center">{standings.storeCity} - {standings.dayName}</h5>
+            {standingsArr.map(({ storeDivision, storeCity, dayName, standingsList }) => (
+                <div key={storeDivision}>
+                    <h5 className="text-center">{storeCity} - {dayName}</h5>
                     <div className="d-flex justify-content-center mb-4">
                         <div className="min-w-50 mx-auto table-wrapper">
                             <table className="table table-bordered mb-4 text-center">
@@ -20,7 +20,7 @@ const StandingsTables = ({ standingsArr }) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <StandingsRow standingsRowData={standings.standingsList} />
+                                    <StandingsRow standingsRowData={standingsList} />
                                 </tbody>
                             </table>
                         </div>

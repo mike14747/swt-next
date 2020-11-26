@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
                         }
                     ));
                 }
-                return data.error ? res.status(500).end() : res.status(200).json(storesInSchedule);
+                return data.error ? res.status(500).end() : res.status(200).json({ storesInSchedule });
             } catch (error) {
                 res.status(500).end();
             }

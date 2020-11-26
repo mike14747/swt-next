@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Router from 'next/router';
 
-function SearchBar() {
+const SearchBar = () => {
     const [searchInput, setSearchInput] = useState('');
     const [submitted, setSubmitted] = useState(false);
     useEffect(() => {
@@ -95,6 +95,6 @@ function SearchBar() {
             `}</style>
         </div>
     );
-}
+};
 
 export default SearchBar;
