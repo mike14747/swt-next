@@ -29,7 +29,7 @@ export async function getServerSideProps({ req }) {
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const host = req.headers['x-forwarded-host'] || req.headers.host;
 
-    const response = await fetch(`${protocol}://${host}/api/pages/rules`);
+    const response = await fetch(`${protocol}://${host}/api/sitepages/rules`);
     if (response.ok) {
         const data = await response.json();
         return { props: data };
