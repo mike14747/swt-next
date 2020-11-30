@@ -36,10 +36,10 @@ export default function MyApp({ Component, pageProps, settings, currentSeasonDat
                         <Navbar />
                     </NavbarContext.Provider>
                     <div id="main-container">
-                        {loading &&
-                            <Loading />
+                        {loading
+                            ? <Loading />
+                            : <Component {...pageProps} />
                         }
-                        <Component {...pageProps} />
                     </div>
                     <Footer />
                 </SettingsContext.Provider>
