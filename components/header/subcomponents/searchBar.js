@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 
 const SearchBar = () => {
+    const router = useRouter();
     const [searchInput, setSearchInput] = useState('');
     const [submitted, setSubmitted] = useState(false);
     useEffect(() => {
@@ -13,18 +14,21 @@ const SearchBar = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        searchInput.length > 0 && setSubmitted(true);
+        if (searchInput.length > 0) {
+            setSubmitted(true);
+            router.push('/search/' + searchInput);
+        }
     };
 
     return (
         <div className="mt-auto">
-            <form className="form-searchbar" onSubmit={handleSubmit}>
-                <input type="text" maxLength="20" placeholder="Find Player/Team" className="input-searchbar" value={searchInput} onChange={event => setSearchInput(event.target.value)} />
-                <button type="submit" name="submit" className="search-button">Go</button>
+            <form className="formSearchbar" onSubmit={handleSubmit}>
+                <input type="text" maxLength="20" placeholder="Find Player/Team" className="inputSearchbar" value={searchInput} onChange={event => setSearchInput(event.target.value)} />
+                <button type="submit" name="submit" className="searchButton">Go</button>
             </form>
-            {submitted && Router.push('/search/' + searchInput)}
+
             <style jsx>{`
-                .form-searchbar {
+                .formSearchbar {
                     font-size: 1rem;
                     font-weight: 400;
                     line-height: 1.25;
@@ -38,7 +42,7 @@ const SearchBar = () => {
                     display: inline-block;
                 }
                 
-                .input-searchbar {
+                .inputSearchbar {
                     display: inline-block;
                     border: 1px #999999 solid;
                     border-radius: 5px;
@@ -52,12 +56,12 @@ const SearchBar = () => {
                     box-sizing: border-box;
                 }
                 
-                .input-searchbar:focus {
+                .inputSearchbar:focus {
                     outline: 0;
                     box-shadow: 0 0 0 0.2rem rgba(0, 123, 123, 0.25);
                 }
                 
-                .search-button {
+                .searchButton {
                     display: inline-block;
                     color: #333333;
                     background-color: #d9d9d9;
@@ -70,30 +74,30 @@ const SearchBar = () => {
                         border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
                 }
                 
-                .search-button:hover {
+                .searchButton:hover {
                     cursor: pointer;
                     color: #212529;
                     background-color: #eeeeee;
                     text-decoration: none;
                 }
                 
-                .search-button:focus {
+                .searchButton:focus {
                     box-shadow: 0 0 0 0.2rem rgba(0, 123, 123, 0.25);
                 }
                 
                 @media (max-width: 575.98px) {
-                    .search-button,
-                    .input-searchbar {
+                    .searchButton,
+                    .inputSearchbar {
                         padding: 0.25rem;
                         margin: 0.15rem;
                     }
-                    .form-searchbar {
+                    .formSearchbar {
                         font-size: .75rem;
                     }
                 }
                 
             `}</style>
-        </div>
+        </div >
     );
 };
 

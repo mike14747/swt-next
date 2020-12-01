@@ -5,7 +5,7 @@ import NavDropdown from './subcomponents/navDropdown';
 import NavButton from './subcomponents/navButton';
 
 const NavBar = () => {
-    const { displaySchedule, storesInSchedule } = useContext(NavbarContext);
+    const { displaySchedule = 0, storesInSchedule = [] } = useContext(NavbarContext);
 
     return (
         <div className="row mt-1 mb-4">

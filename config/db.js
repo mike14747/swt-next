@@ -1,13 +1,26 @@
 const mysql = require('serverless-mysql');
 
-const db = mysql({
-    config: {
-        host: process.env.DB_HOST,
-        database: process.env.DB_NAME,
-        user: process.env.DB_USER,
-        password: process.env.DB_PW,
-    },
-});
+let db;
+
+if (process.env.NODE_ENV === 'development') {
+    db = mysql({
+        config: {
+            host: process.env.DB_HOST_DEV,
+            database: process.env.DB_NAME_DEV,
+            user: process.env.DB_USER_DEV,
+            password: process.env.DB_PW_DEV,
+        },
+    });
+} else {
+    db = mysql({
+        config: {
+            host: process.env.DB_HOST_PROD,
+            database: process.env.DB_NAME_PROD,
+            user: process.env.DB_USER_PROD,
+            password: process.env.DB_PW_PROD,
+        },
+    });
+}
 
 exports.query = async (query) => {
     try {

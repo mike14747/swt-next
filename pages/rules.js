@@ -1,7 +1,11 @@
 import ReactHtmlParser from 'react-html-parser';
-import PageHeading from '../components/pageHeading';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+
+import db from '../config/db';
+import SQL from 'sql-template-strings';
+
+import PageHeading from '../components/pageHeading';
 
 const Rules = ({ rules, error }) => {
     return (
@@ -25,17 +29,17 @@ Rules.propTypes = {
     error: PropTypes.object,
 };
 
-export async function getServerSideProps({ req }) {
-    const protocol = req.headers['x-forwarded-proto'] || 'http';
-    const host = req.headers['x-forwarded-host'] || req.headers.host;
+export async function getServerSideProps() {
+    try {
+        const rulesResponse = await db.query(SQL`SELECT content_heading, page_content FROM store_text WHERE store_id=97;`);
+        const rulesJson = JSON.parse(JSON.stringify(rulesResponse));
+        const rules = rulesJson.length === 1 ? rulesJson[0] : null;
 
-    const response = await fetch(`${protocol}://${host}/api/sitepages/rules`);
-    if (response.ok) {
-        const data = await response.json();
-        return { props: data };
-    } else {
-        const error = { statusCode: response.status, message: 'An error occurred trying to fetch data!' };
-        return { props: { error } };
+        if (!rulesResponse.error) return { props: { rules } };
+        return { props: { error: { message: 'An error occurred trying to fetch data!' } } };
+    } catch (error) {
+        console.log(error.message);
+        return { props: { error: { message: 'An error occurred trying to fetch data!' } } };
     }
 }
 

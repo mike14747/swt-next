@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
+import db from '../config/db';
+import SQL from 'sql-template-strings';
+
 import PageHeading from '../components/pageHeading';
 
 const Champions = ({ champions, error }) => {
@@ -46,17 +49,16 @@ Champions.propTypes = {
     error: PropTypes.object,
 };
 
-export async function getServerSideProps({ req }) {
-    const protocol = req.headers['x-forwarded-proto'] || 'http';
-    const host = req.headers['x-forwarded-host'] || req.headers.host;
+export async function getServerSideProps() {
+    try {
+        const championsResponse = await db.query(SQL`SELECT s.season_id, s.season_name, s.year, s.tourny_team_id, t.team_name, st.store_city, s.comments FROM seasons AS s JOIN teams AS t ON t.team_id=s.tourny_team_id JOIN stores AS st ON st.store_id=t.store_id WHERE s.tourny_team_id>0 ORDER by s.season_id ASC;`);
+        const champions = JSON.parse(JSON.stringify(championsResponse));
 
-    const response = await fetch(`${protocol}://${host}/api/champions`);
-    if (response.ok) {
-        const data = await response.json();
-        return { props: data };
-    } else {
-        const error = { statusCode: response.status, message: 'An error occurred trying to fetch data!' };
-        return { props: { error } };
+        if (!championsResponse.error) return { props: { champions } };
+        return { props: { error: { message: 'An error occurred trying to fetch data!' } } };
+    } catch (error) {
+        console.log(error.message);
+        return { props: { error: { message: 'An error occurred trying to fetch data!' } } };
     }
 }
 

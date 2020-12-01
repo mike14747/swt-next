@@ -25,7 +25,6 @@ function Dropdown({ displayedSeason, buttonText, listItems }) {
                                     </Link>
                                 </>
                             }
-
                         </Fragment>
                     ))}
                 </ul>
