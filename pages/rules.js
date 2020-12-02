@@ -29,17 +29,17 @@ Rules.propTypes = {
     error: PropTypes.object,
 };
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
     try {
         const rulesResponse = await db.query(SQL`SELECT content_heading, page_content FROM store_text WHERE store_id=97;`);
         const rulesJson = JSON.parse(JSON.stringify(rulesResponse));
         const rules = rulesJson.length === 1 ? rulesJson[0] : null;
 
-        if (!rulesResponse.error) return { props: { rules } };
-        return { props: { error: { message: 'An error occurred trying to fetch data!' } } };
+        if (!rulesResponse.error) return { props: { rules }, revalidate: 360 };
+        throw new Error(rulesResponse.error);
     } catch (error) {
         console.log(error.message);
-        return { props: { error: { message: 'An error occurred trying to fetch data!' } } };
+        return { props: { error: { message: 'An error occurred trying to fetch data!' } }, revalidate: 360 };
     }
 }
 

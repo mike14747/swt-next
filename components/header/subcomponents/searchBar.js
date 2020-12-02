@@ -15,8 +15,8 @@ const SearchBar = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (searchInput.length > 0) {
+            router.push(`/search/${searchInput}`);
             setSubmitted(true);
-            router.push('/search/' + searchInput);
         }
     };
 

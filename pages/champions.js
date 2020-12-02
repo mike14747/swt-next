@@ -49,16 +49,16 @@ Champions.propTypes = {
     error: PropTypes.object,
 };
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
     try {
         const championsResponse = await db.query(SQL`SELECT s.season_id, s.season_name, s.year, s.tourny_team_id, t.team_name, st.store_city, s.comments FROM seasons AS s JOIN teams AS t ON t.team_id=s.tourny_team_id JOIN stores AS st ON st.store_id=t.store_id WHERE s.tourny_team_id>0 ORDER by s.season_id ASC;`);
         const champions = JSON.parse(JSON.stringify(championsResponse));
 
-        if (!championsResponse.error) return { props: { champions } };
-        return { props: { error: { message: 'An error occurred trying to fetch data!' } } };
+        if (!championsResponse.error) return { props: { champions }, revalidate: 360 };
+        throw new Error(championsResponse.error);
     } catch (error) {
         console.log(error.message);
-        return { props: { error: { message: 'An error occurred trying to fetch data!' } } };
+        return { props: { error: { message: 'An error occurred trying to fetch data!' } }, revalidate: 360 };
     }
 }
 

@@ -46,10 +46,9 @@ MyApp.propTypes = {
 };
 
 MyApp.getInitialProps = async () => {
-    const apiUrl = process.env.NODE_ENV === 'development' ? process.env.DEV_API_URL : process.env.PRODUCTION_API_URL;
+    const baseApiUrl = 'https://skeeballworldtour.mikegullo.com';
     try {
-        // const settingsResponse = await fetch('https://skeeballworldtour.mikegullo.com/api/settings');
-        const settingsResponse = await fetch(`${apiUrl}/api/settings`);
+        const settingsResponse = await fetch(`${baseApiUrl}/api/settings`);
         const settingsJson = await settingsResponse.json();
         const settings = settingsJson[0] || {};
 
@@ -58,8 +57,7 @@ MyApp.getInitialProps = async () => {
             textBoxText: settings.text_box_text,
         };
 
-        // const navbarResponse = await fetch(`https://skeeballworldtour.mikegullo.com/api/schedules/navbar/${settings.current_season_id}`);
-        const navbarResponse = await fetch(`${apiUrl}/api/schedules/navbar/${settings.current_season_id}`);
+        const navbarResponse = await fetch(`${baseApiUrl}/api/schedules/navbar/${settings.current_season_id}`);
         const navbarJson = await navbarResponse.json();
         let storesInSchedule = [];
         if (navbarJson && navbarJson.length > 0) {
@@ -72,6 +70,7 @@ MyApp.getInitialProps = async () => {
             ));
         }
         const navbarData = {
+            currentSeasonId: settings.current_season_id,
             storesInSchedule,
             displaySchedule: settings.display_schedule,
         };
