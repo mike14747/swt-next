@@ -27,7 +27,7 @@ const Standings = ({ standings, displayedSeason, seasons, error }) => {
                 ? <StandingsTables standingsArr={standings} />
                 : standings
                     ? <div className="empty-result">There are no standings for the selected season.</div>
-                    : error && <h4 className="text-danger text-center mt-4">{error.message}</h4>
+                    : error && <h4 className="text-danger text-center mt-4">An error occurred trying to fetch data!</h4>
             }
         </>
     );
@@ -50,7 +50,7 @@ export async function getServerSideProps({ params }) {
         const seasons = await db.query(SQL`SELECT DISTINCT(st.season_id), se.season_id, se.season_name, se.year FROM standings AS st JOIN seasons AS se ON (st.season_id=se.season_id) ORDER BY se.season_id DESC;`);
 
         if (!standings.error && !displayedSeasonResponse.error && !seasons.error) return { props: { standings: groupStandings(standings), displayedSeason: JSON.parse(JSON.stringify(displayedSeason)), seasons: JSON.parse(JSON.stringify(seasons)) } };
-        return { props: { error: { message: 'An error occurred trying to fetch data!' } } };
+        throw new Error(standings.error || displayedSeasonResponse.error || seasons.error);
     } catch (error) {
         console.error(error.message);
         return { props: { error: { message: 'An error occurred trying to fetch data!' } } };
