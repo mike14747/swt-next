@@ -75,7 +75,8 @@ MyApp.getInitialProps = async () => {
             displaySchedule: settings.display_schedule,
         };
 
-        return { navbarData, headerData };
+        if (!settingsResponse.error && !navbarResponse.error) return { navbarData, headerData };
+        throw new Error(settingsResponse.error || navbarResponse.error);
     } catch (error) {
         console.log('catch error:', error.message);
         return { navbarData: {}, headerData: null };

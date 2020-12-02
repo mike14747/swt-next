@@ -38,7 +38,7 @@ export async function getStaticProps() {
         if (!rulesResponse.error) return { props: { rules }, revalidate: 360 };
         throw new Error(rulesResponse.error);
     } catch (error) {
-        console.log(error.message);
+        console.error(error.message);
         return { props: { error: { message: 'An error occurred trying to fetch data!' } }, revalidate: 360 };
     }
 }
