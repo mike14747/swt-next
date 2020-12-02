@@ -57,7 +57,7 @@ export async function getStaticProps() {
         if (!championsResponse.error) return { props: { champions }, revalidate: 360 };
         throw new Error(championsResponse.error);
     } catch (error) {
-        console.error(error.message);
+        console.log(error.message);
         return { props: { error: { message: 'An error occurred trying to fetch data!' } }, revalidate: 360 };
     }
 }

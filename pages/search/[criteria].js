@@ -62,7 +62,7 @@ export async function getServerSideProps({ query }) {
         if (!playersResponse.error && !teamsResponse.error) return { props: { players, teams } };
         throw new Error(playersResponse.error || teamsResponse.error);
     } catch (error) {
-        console.error(error.message);
+        console.log(error.message);
         return { props: { error: { message: 'An error occurred trying to fetch data!' } } };
     }
 }

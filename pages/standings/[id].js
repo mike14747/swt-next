@@ -52,7 +52,7 @@ export async function getServerSideProps({ params }) {
         if (!standings.error && !displayedSeasonResponse.error && !seasons.error) return { props: { standings: groupStandings(standings), displayedSeason: JSON.parse(JSON.stringify(displayedSeason)), seasons: JSON.parse(JSON.stringify(seasons)) } };
         throw new Error(standings.error || displayedSeasonResponse.error || seasons.error);
     } catch (error) {
-        console.error(error.message);
+        console.log(error.message);
         return { props: { error: { message: 'An error occurred trying to fetch data!' } } };
     }
 }

@@ -11,9 +11,9 @@ const NavBar = () => {
         <div className="row mt-1 mb-4">
             <div className="col-12 justify-content-center text-center">
                 <NavButton buttonText="Standings" url={`/standings/${currentSeasonId}`} />
-                <NavDropdown buttonText="Results +" urlPrefix="/results" listItems={storesInSchedule} />
+                <NavDropdown buttonText="Results +" urlPrefix={`/results/${currentSeasonId}`} listItems={storesInSchedule} />
                 {displaySchedule === 1 &&
-                    <NavDropdown buttonText="Schedule +" urlPrefix="/schedule" listItems={storesInSchedule} />
+                    <NavDropdown buttonText="Schedule +" urlPrefix={`/schedules/${currentSeasonId}`} listItems={storesInSchedule} />
                 }
             </div>
         </div>

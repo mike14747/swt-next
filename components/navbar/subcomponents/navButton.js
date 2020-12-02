@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import styles from '../../../styles/navButton.module.css';
 
-export default function NavButton({ url = '', buttonText = '' }) {
+export default function NavButton({ url, buttonText }) {
     return (
         <div className={styles.navbutton}>
             <Link href={url}>
