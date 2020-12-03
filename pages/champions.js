@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
-import db from '../config/db';
-import SQL from 'sql-template-strings';
+import { getChampions } from '../lib/api/champions';
 
 import PageHeading from '../components/pageHeading';
 
@@ -51,14 +50,14 @@ Champions.propTypes = {
 
 export async function getStaticProps() {
     try {
-        const championsResponse = await db.query(SQL`SELECT s.season_id, s.season_name, s.year, s.tourny_team_id, t.team_name, st.store_city, s.comments FROM seasons AS s JOIN teams AS t ON t.team_id=s.tourny_team_id JOIN stores AS st ON st.store_id=t.store_id WHERE s.tourny_team_id>0 ORDER by s.season_id ASC;`);
-        const champions = JSON.parse(JSON.stringify(championsResponse));
+        const championsResponse = await getChampions();
+        const championsJson = JSON.parse(JSON.stringify(championsResponse));
 
-        if (!championsResponse.error) return { props: { champions }, revalidate: 360 };
+        if (!championsResponse.error) return { props: { champions: championsJson } };
         throw new Error(championsResponse.error);
     } catch (error) {
         console.log(error.message);
-        return { props: { error: { message: 'An error occurred trying to fetch data!' } }, revalidate: 360 };
+        return { props: { error: { message: 'An error occurred trying to fetch data!' } } };
     }
 }
 
