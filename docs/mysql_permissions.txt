@@ -1,0 +1,4 @@
+If you're getting connection errors connecting tp mysql 8, trying running these 2 lines in workbench, then reconnect:
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'your_mysql_password!';
+flush privileges;
