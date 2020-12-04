@@ -5,6 +5,8 @@ import Router from 'next/router';
 import NavbarContext from '../context/navbarContext';
 import HeaderContext from '../context/headerContext';
 
+// import { getNavbarStoresList } from '../lib/api/schedules';
+
 import Header from '../components/header/header';
 import Navbar from '../components/navbar/navbar';
 import Footer from '../components/footer';

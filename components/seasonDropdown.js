@@ -20,7 +20,7 @@ function Dropdown({ displayedSeason, buttonText, listItems }) {
                             {displayedSeason && (item.season_id === parseInt(displayedSeason.season_id))
                                 ? <li className={styles.viewing}>&gt; {item.season_name + ' - ' + item.year}</li>
                                 : <>
-                                    <Link href={'/standings/' + item.season_id}>
+                                    <Link href={item.url}>
                                         <a><li>{item.season_name + ' - ' + item.year}</li></a>
                                     </Link>
                                 </>

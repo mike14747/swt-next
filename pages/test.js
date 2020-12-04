@@ -31,7 +31,6 @@ Test.propTypes = {
 export async function getServerSideProps({ req, res }) {
     try {
         const testResponse = await testEndpoint(req, res);
-        // console.log('testResponse:', testResponse);
         const testJson = JSON.parse(JSON.stringify(testResponse));
 
         if (!testResponse.error) return { props: { champions: testJson } };

@@ -53,11 +53,11 @@ export async function getStaticProps() {
         const championsResponse = await getChampions();
         const championsJson = JSON.parse(JSON.stringify(championsResponse));
 
-        if (!championsResponse.error) return { props: { champions: championsJson } };
+        if (!championsResponse.error) return { props: { champions: championsJson }, revalidate: 360 };
         throw new Error(championsResponse.error);
     } catch (error) {
         console.log(error.message);
-        return { props: { error: { message: 'An error occurred trying to fetch data!' } } };
+        return { props: { error: { message: 'An error occurred trying to fetch data!' } }, revalidate: 360 };
     }
 }
 

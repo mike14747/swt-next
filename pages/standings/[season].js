@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
-import db from '../../config/db';
-import SQL from 'sql-template-strings';
-
+import { getStandings, getStandingsSeasonsList } from '../../lib/api/standings';
+import { getSeasonDetails } from '../../lib/api/seasons';
 import groupStandings from '../../utils/groupStandings';
+
 import PageHeading from '../../components/pageHeading';
 import StandingsTables from '../../components/standingsTables/standingsTables';
 import SeasonDropdown from '../../components/seasonDropdown';
@@ -42,15 +42,22 @@ Standings.propTypes = {
 
 export async function getServerSideProps({ params }) {
     try {
-        const standings = await db.query(SQL`SELECT st.standings_id, CONCAT(st.store_id,st.division_id) AS store_division, s.store_id, s.store_city, t.team_id, t.team_name, st.wins, st.losses, st.ties, st.total_points, d.division_id, d.day_name FROM standings AS st JOIN stores AS s ON (st.store_id=s.store_id) JOIN teams AS t ON (st.team_id=t.team_id) JOIN divisions AS d ON (st.division_id=d.division_id) WHERE st.season_id=${params.id} ORDER BY s.store_city ASC, d.division_id ASC, st.standings_order ASC;`);
+        const standingsResponse = await getStandings(params);
+        const standingsJson = JSON.parse(JSON.stringify(standingsResponse));
 
-        const displayedSeasonResponse = await db.query(SQL`SELECT se.season_id, se.season_name, se.year FROM seasons AS se WHERE se.season_id=${params.id} LIMIT 1;`);
-        const displayedSeason = displayedSeasonResponse.length === 1 ? displayedSeasonResponse[0] : null;
+        const seasonDetailsResponse = await getSeasonDetails(params);
+        const seasonDetailsJson = JSON.parse(JSON.stringify(seasonDetailsResponse));
+        const seasonDetails = seasonDetailsJson.length === 1 ? seasonDetailsJson[0] : null;
 
-        const seasons = await db.query(SQL`SELECT DISTINCT(st.season_id), se.season_id, se.season_name, se.year FROM standings AS st JOIN seasons AS se ON (st.season_id=se.season_id) ORDER BY se.season_id DESC;`);
+        const seasonListResponse = await getStandingsSeasonsList();
+        const seasonListJson = JSON.parse(JSON.stringify(seasonListResponse));
+        const seasons = seasonListJson.map((season) => ({
+            ...season,
+            url: '/standings/' + season.season_id,
+        }));
 
-        if (!standings.error && !displayedSeasonResponse.error && !seasons.error) return { props: { standings: groupStandings(standings), displayedSeason: JSON.parse(JSON.stringify(displayedSeason)), seasons: JSON.parse(JSON.stringify(seasons)) } };
-        throw new Error(standings.error || displayedSeasonResponse.error || seasons.error);
+        if (!standingsResponse.error && !seasonDetailsResponse.error && !seasonListResponse.error) return { props: { standings: groupStandings(standingsJson), displayedSeason: seasonDetails, seasons } };
+        throw new Error(standingsResponse.error || seasonDetailsResponse.error || seasonListResponse.error);
     } catch (error) {
         console.log(error.message);
         return { props: { error: { message: 'An error occurred trying to fetch data!' } } };

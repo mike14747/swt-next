@@ -10,6 +10,7 @@ if (process.env.NODE_ENV === 'development') {
             user: process.env.DB_USER_DEV,
             password: process.env.DB_PW_DEV,
             database: process.env.DB_NAME_DEV,
+            multipleStatements: true,
         },
     });
 } else {
@@ -20,6 +21,7 @@ if (process.env.NODE_ENV === 'development') {
             user: process.env.DB_USER_PROD,
             password: process.env.DB_PW_PROD,
             database: process.env.DB_NAME_PROD,
+            multipleStatements: true,
         },
     });
 
@@ -31,6 +33,7 @@ if (process.env.NODE_ENV === 'development') {
     //         user: url.username,
     //         password: url.password,
     //         database: url.pathname.replace('/', ''),
+    //         multipleStatements: true,
     //     },
     // });
 }
