@@ -1,22 +1,22 @@
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
-import { getStoreDivisionResults, getResultsSeasonsList } from '../../../../../lib/api/results';
+import { getStoreDivisionSchedules, getSchedulesSeasonsList } from '../../../../../lib/api/schedules';
 import { getSeasonDetails } from '../../../../../lib/api/seasons';
 import { getStoreDetails } from '../../../../../lib/api/stores';
-import { formatResults } from '../../../../../utils/resultsFunctions';
+import { formatScheduleArray } from '../../../../../utils/schedulesFunctions';
 
 import PageHeading from '../../../../../components/pageHeading';
-import ResultsDiv from '../../../../../components/resultsDiv/resultsDiv';
+import ScheduleTable from '../../../../../components/scheduleTable/scheduleTable';
 import SeasonDropdown from '../../../../../components/seasonDropdown';
 
-const Results = ({ results, displayedSeason, storeDetails, seasons, error }) => {
+const Schedules = ({ schedules, displayedSeason, storeDetails, seasons, error }) => {
     return (
         <>
             <Head>
-                <title>Results</title>
+                <title>Schedule</title>
             </Head>
-            <PageHeading text="Results" />
+            <PageHeading text="Schedule" />
             <div className="row mb-4">
                 <div className="col-6 text-left p-2">
                     {storeDetails &&
@@ -27,34 +27,34 @@ const Results = ({ results, displayedSeason, storeDetails, seasons, error }) => 
                 </div>
                 <div className="col-6 text-right p-2">
                     {seasons && seasons.length > 0 &&
-                        <SeasonDropdown displayedSeason={displayedSeason} buttonText="View Results From" listItems={seasons} />
+                        <SeasonDropdown displayedSeason={displayedSeason} buttonText="View Schedules From" listItems={seasons} />
                     }
                 </div>
             </div>
-            {results && results.length > 0
-                ? <ResultsDiv results={results} />
-                : results
-                    ? <div className="empty-result">There are no results for the selected season.</div>
+            {schedules && schedules.length > 0
+                ? <ScheduleTable schedules={schedules} />
+                : schedules
+                    ? <div className="empty-result">There are no schedules for the selected season.</div>
                     : error && <h4 className="text-danger text-center mt-4">An error occurred trying to fetch data!</h4>
             }
         </>
     );
 };
 
-Results.propTypes = {
-    results: PropTypes.array,
+Schedules.propTypes = {
+    schedules: PropTypes.array,
     displayedSeason: PropTypes.object,
     storeDetails: PropTypes.object,
     seasons: PropTypes.array,
     error: PropTypes.object,
 };
 
-export default Results;
+export default Schedules;
 
 export async function getServerSideProps({ params }) {
     try {
-        const resultsResponse = await getStoreDivisionResults(params);
-        const resultsJson = JSON.parse(JSON.stringify(resultsResponse));
+        const schedulesResponse = await getStoreDivisionSchedules(params);
+        const schedulesJson = JSON.parse(JSON.stringify(schedulesResponse));
 
         const seasonDetailsResponse = await getSeasonDetails(params);
         const seasonDetailsJson = JSON.parse(JSON.stringify(seasonDetailsResponse));
@@ -64,15 +64,15 @@ export async function getServerSideProps({ params }) {
         const storeDetailsJson = JSON.parse(JSON.stringify(storeDetailsResponse));
         const storeDetails = storeDetailsJson.length === 1 ? storeDetailsJson[0] : null;
 
-        const seasonListResponse = await getResultsSeasonsList(params);
+        const seasonListResponse = await getSchedulesSeasonsList(params);
         const seasonListJson = JSON.parse(JSON.stringify(seasonListResponse));
         const seasons = seasonListJson.map((season) => ({
             ...season,
-            url: '/results/' + season.season_id + '/' + params.store + '/' + params.division,
+            url: '/schedules/' + season.season_id + '/' + params.store + '/' + params.division,
         }));
 
-        if (!resultsResponse.error && !storeDetailsResponse.error && !seasonListResponse.error) return { props: { results: formatResults(resultsJson), seasonDetails, storeDetails, seasons } };
-        throw new Error(resultsResponse.error || storeDetailsResponse.error || seasonListResponse.error);
+        if (!schedulesResponse.error && !storeDetailsResponse.error && !seasonListResponse.error) return { props: { schedules: formatScheduleArray(schedulesJson), displayedSeason: seasonDetails, storeDetails, seasons } };
+        throw new Error(schedulesResponse.error || storeDetailsResponse.error || seasonListResponse.error);
     } catch (error) {
         console.log(error.message);
         return { props: { error: { message: 'An error occurred trying to fetch data!' } } };

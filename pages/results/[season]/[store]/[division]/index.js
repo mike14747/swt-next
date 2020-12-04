@@ -11,7 +11,6 @@ import ResultsDiv from '../../../../../components/resultsDiv/resultsDiv';
 import SeasonDropdown from '../../../../../components/seasonDropdown';
 
 const Results = ({ results, displayedSeason, storeDetails, seasons, error }) => {
-    console.log('displayedSeason:', displayedSeason);
     return (
         <>
             <Head>
