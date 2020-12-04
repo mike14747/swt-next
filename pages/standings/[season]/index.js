@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
-import { getStandings, getStandingsSeasonsList } from '../../lib/api/standings';
-import { getSeasonDetails } from '../../lib/api/seasons';
-import groupStandings from '../../utils/groupStandings';
+import { getStandings, getStandingsSeasonsList } from '../../../lib/api/standings';
+import { getSeasonDetails } from '../../../lib/api/seasons';
+import groupStandings from '../../../utils/groupStandings';
 
-import PageHeading from '../../components/pageHeading';
-import StandingsTables from '../../components/standingsTables/standingsTables';
-import SeasonDropdown from '../../components/seasonDropdown';
+import PageHeading from '../../../components/pageHeading';
+import StandingsTables from '../../../components/standingsTables/standingsTables';
+import SeasonDropdown from '../../../components/seasonDropdown';
 
 const Standings = ({ standings, displayedSeason, seasons, error }) => {
     return (

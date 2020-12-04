@@ -11,7 +11,6 @@ import ResultsDiv from '../../../../../components/resultsDiv/resultsDiv';
 import SeasonDropdown from '../../../../../components/seasonDropdown';
 
 const Results = ({ results, displayedSeason, storeDetails, seasons, error }) => {
-    console.log('displayedSeason:', displayedSeason);
     return (
         <>
             <Head>
@@ -72,7 +71,7 @@ export async function getServerSideProps({ params }) {
             url: '/results/' + season.season_id + '/' + params.store + '/' + params.division,
         }));
 
-        if (!resultsResponse.error && !storeDetailsResponse.error && !seasonListResponse.error) return { props: { results: formatResults(resultsJson), displayedSeason: seasonDetails, storeDetails, seasons } };
+        if (!resultsResponse.error && !storeDetailsResponse.error && !seasonListResponse.error) return { props: { results: formatResults(resultsJson), seasonDetails, storeDetails, seasons } };
         throw new Error(resultsResponse.error || storeDetailsResponse.error || seasonListResponse.error);
     } catch (error) {
         console.log(error.message);

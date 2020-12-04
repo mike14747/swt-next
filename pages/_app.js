@@ -62,19 +62,29 @@ MyApp.getInitialProps = async () => {
         const navbarResponse = await fetch(`${baseApiUrl}/api/schedules/navbar/${settings.current_season_id}`);
         const navbarJson = await navbarResponse.json();
         let storesInSchedule = [];
+        let storesInResults = [];
         if (navbarJson && navbarJson.length > 0) {
             storesInSchedule = navbarJson.map(storeDiv => (
                 {
                     id: storeDiv.store_division,
                     text: storeDiv.store_city + ' (' + storeDiv.day_name + ')',
-                    href: '/' + storeDiv.store_id + '/' + storeDiv.division_id,
+                    href: `/schedules/${settings.current_season_id}/${storeDiv.store_id}/${storeDiv.division_id}`,
+                }
+            ));
+            storesInResults = navbarJson.map(storeDiv => (
+                {
+                    id: storeDiv.store_division,
+                    text: storeDiv.store_city + ' (' + storeDiv.day_name + ')',
+                    href: `/results/${settings.current_season_id}/${storeDiv.store_id}/${storeDiv.division_id}`,
                 }
             ));
         }
         const navbarData = {
             currentSeasonId: settings.current_season_id,
-            storesInSchedule,
             displaySchedule: settings.display_schedule,
+            storesInSchedule,
+            storesInResults,
+
         };
 
         if (!settingsResponse.error && !navbarResponse.error) return { navbarData, headerData };

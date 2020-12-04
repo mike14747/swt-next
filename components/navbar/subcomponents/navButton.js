@@ -4,10 +4,10 @@ import Link from 'next/link';
 
 import styles from '../../../styles/navButton.module.css';
 
-export default function NavButton({ url, buttonText }) {
+export default function NavButton({ href, buttonText }) {
     return (
         <div className={styles.navbutton}>
-            <Link href={url}>
+            <Link href={href}>
                 <a><div className={styles.navbtn}>{buttonText}</div></a>
             </Link>
         </div>
@@ -16,5 +16,5 @@ export default function NavButton({ url, buttonText }) {
 
 NavButton.propTypes = {
     buttonText: PropTypes.string,
-    url: PropTypes.string,
+    href: PropTypes.string,
 };
