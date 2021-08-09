@@ -20,20 +20,16 @@
         "url": "https://github.com/mike14747/swt-next/issues"
     },
     "homepage": "https://github.com/mike14747/swt-next#readme",
-    "devDependencies": {
-        "eslint": "^7.14.0",
-        "eslint-config-standard": "^16.0.2",
-        "eslint-plugin-import": "^2.22.1",
-        "eslint-plugin-node": "^11.1.0",
-        "eslint-plugin-promise": "^4.2.1",
-        "eslint-plugin-react": "^7.21.5"
-    },
     "dependencies": {
-        "next": "^10.0.2",
-        "react": "^17.0.1",
-        "react-dom": "^17.0.1",
+        "next": "^11.0.1",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
         "react-html-parser": "^2.0.2",
         "serverless-mysql": "^1.5.4",
         "sql-template-strings": "^2.2.2"
+    },
+    "devDependencies": {
+        "eslint": "^7.32.0",
+        "eslint-config-next": "^11.0.1"
     }
 }

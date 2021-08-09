@@ -48,49 +48,51 @@ MyApp.propTypes = {
 };
 
 MyApp.getInitialProps = async () => {
-    const baseApiUrl = 'https://skeeballworldtour.mikegullo.com';
-    try {
-        const settingsResponse = await fetch(`${baseApiUrl}/api/settings`);
-        const settingsJson = await settingsResponse.json();
-        const settings = settingsJson[0] || {};
+    // const baseApiUrl = 'https://skeeballworldtour.mikegullo.com';
+    // try {
+    //     const settingsResponse = await fetch(`${baseApiUrl}/api/settings`);
+    //     const settingsJson = await settingsResponse.json();
+    //     const settings = settingsJson[0] || {};
 
-        const headerData = {
-            textBoxHeading: settings.text_box_heading,
-            textBoxText: settings.text_box_text,
-        };
+    //     const headerData = {
+    //         textBoxHeading: settings.text_box_heading,
+    //         textBoxText: settings.text_box_text,
+    //     };
 
-        const navbarResponse = await fetch(`${baseApiUrl}/api/schedules/navbar/${settings.current_season_id}`);
-        const navbarJson = await navbarResponse.json();
-        let storesInSchedule = [];
-        let storesInResults = [];
-        if (navbarJson && navbarJson.length > 0) {
-            storesInSchedule = navbarJson.map(storeDiv => (
-                {
-                    id: storeDiv.store_division,
-                    text: storeDiv.store_city + ' (' + storeDiv.day_name + ')',
-                    href: `/schedules/${settings.current_season_id}/${storeDiv.store_id}/${storeDiv.division_id}`,
-                }
-            ));
-            storesInResults = navbarJson.map(storeDiv => (
-                {
-                    id: storeDiv.store_division,
-                    text: storeDiv.store_city + ' (' + storeDiv.day_name + ')',
-                    href: `/results/${settings.current_season_id}/${storeDiv.store_id}/${storeDiv.division_id}`,
-                }
-            ));
-        }
-        const navbarData = {
-            currentSeasonId: settings.current_season_id,
-            displaySchedule: settings.display_schedule,
-            storesInSchedule,
-            storesInResults,
+    //     const navbarResponse = await fetch(`${baseApiUrl}/api/schedules/navbar/${settings.current_season_id}`);
+    //     const navbarJson = await navbarResponse.json();
+    //     let storesInSchedule = [];
+    //     let storesInResults = [];
+    //     if (navbarJson && navbarJson.length > 0) {
+    //         storesInSchedule = navbarJson.map(storeDiv => (
+    //             {
+    //                 id: storeDiv.store_division,
+    //                 text: storeDiv.store_city + ' (' + storeDiv.day_name + ')',
+    //                 href: `/schedules/${settings.current_season_id}/${storeDiv.store_id}/${storeDiv.division_id}`,
+    //             }
+    //         ));
+    //         storesInResults = navbarJson.map(storeDiv => (
+    //             {
+    //                 id: storeDiv.store_division,
+    //                 text: storeDiv.store_city + ' (' + storeDiv.day_name + ')',
+    //                 href: `/results/${settings.current_season_id}/${storeDiv.store_id}/${storeDiv.division_id}`,
+    //             }
+    //         ));
+    //     }
+    //     const navbarData = {
+    //         currentSeasonId: settings.current_season_id,
+    //         displaySchedule: settings.display_schedule,
+    //         storesInSchedule,
+    //         storesInResults,
 
-        };
+    //     };
 
-        if (!settingsResponse.error && !navbarResponse.error) return { navbarData, headerData };
-        throw new Error(settingsResponse.error || navbarResponse.error);
-    } catch (error) {
-        console.log('catch error:', error.message);
-        return { navbarData: {}, headerData: null };
-    }
+    //     if (!settingsResponse.error && !navbarResponse.error) return { navbarData, headerData };
+    //     throw new Error(settingsResponse.error || navbarResponse.error);
+    // } catch (error) {
+    //     console.log('catch error:', error.message);
+    //     return { navbarData: {}, headerData: null };
+    // }
+
+    return { navbarData: {}, headerData: {} };
 };
